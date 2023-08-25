@@ -4,7 +4,7 @@ A typesafe translation library that uses a base translation to achieve full safe
 
 **Still very much WIP.**
 
-# Usage
+## Usage
 
 Create an i18n folder in the `src` directory of your project.
 All the Boilerplate will be contained in the `i18n/index.ts` file.
@@ -14,11 +14,11 @@ Here's an example with a Static Language Provider:
 ```ts
 import type { CacheEntry, i18nDefinition, Strict, NonStrict } from 'react-typesafe-i18n';
 import {
-	i18nBuilder,
-	StaticProvider,
-	Detector,
-	LocalStorageDetector,
-	NavigatorDetector,
+  i18nBuilder,
+  StaticProvider,
+  Detector,
+  LocalStorageDetector,
+  NavigatorDetector,
 } from 'react-typesafe-i18n';
 
 // components
@@ -27,13 +27,13 @@ import { translation as about } from '../pages/About';
 
 // base
 const base_translation = {
-	home,
-	about,
+  home,
+  about,
 } as const;
 
 export const base_language: CacheEntry<typeof base_translation> = {
-	lang: 'en',
-	translation: base_translation,
+  lang: 'en',
+  translation: base_translation,
 };
 
 // Provider
@@ -43,8 +43,8 @@ const provider = new StaticProvider([base_language, german, italian]);
 
 // type boilerplate
 export type Definition<S extends boolean = false> = i18nDefinition<
-	typeof base_translation,
-	S
+  typeof base_translation,
+  S
 >;
 
 export type NonStrictDefinition = NonStrict<typeof base_translation>;
@@ -55,9 +55,9 @@ export type Language = CacheEntry<Definition<false>>;
 // create the builder and add a detector
 const builder = new i18nBuilder(base_language, provider);
 builder.add_detector(
-	new Detector(provider, LocalStorageDetector(), [
-		NavigatorDetector().detector,
-	])
+  new Detector(provider, LocalStorageDetector(), [
+    NavigatorDetector().detector,
+  ])
 );
 
 // build the Provider component and utility hooks
@@ -91,9 +91,9 @@ Now you can use the translations in your components and even define their transl
 import { useLanguage, useTranslation } from '../i18n';
 
 export const translation = {
-	count: 'count is: ',
-	tip: 'Edit <code>src/App.tsx</code> and save to test HMR',
-	docs: 'Click on the Vite and React logos to learn more',
+  count: 'count is: ',
+  tip: 'Edit <code>src/App.tsx</code> and save to test HMR',
+  docs: 'Click on the Vite and React logos to learn more',
 } as const;
 
 
