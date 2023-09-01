@@ -59,7 +59,7 @@
     "valibot": "^0.13.1"
   },
   "devDependencies": {
-    "@types/node": "^16.0.12",
+    "@types/node": "^20.5.7",
     "@types/react": "18.2.15",
     "typesafe-i18n": "5.26.2",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
