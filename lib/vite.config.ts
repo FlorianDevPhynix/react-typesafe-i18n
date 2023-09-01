@@ -9,7 +9,7 @@ export default defineConfig({
 		dts({
 			rollupTypes: true,
 			rollupConfig: {
-				bundledPackages: ['valibot'],
+				bundledPackages: ['typesafe-i18n'],
 			},
 		}),
 	],
@@ -28,12 +28,17 @@ export default defineConfig({
 			},
 		},
 		rollupOptions: {
-			external: ['react'],
+			external: ['react', 'typesafe-i18n', 'valibot'],
 			output: {
-				globals: {
-					react: 'React',
-				},
+				// Since we publish our ./src folder, there's no point
+				// in bloating sourcemaps with another copy of it.
+				sourcemapExcludeSources: true,
 			},
 		},
+		sourcemap: true,
+		// Reduce bloat from legacy polyfills.
+		target: 'esnext',
+		// Leave minification up to applications.
+		minify: false,
 	},
 });

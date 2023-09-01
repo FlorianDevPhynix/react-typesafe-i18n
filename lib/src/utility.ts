@@ -1,4 +1,4 @@
-import type { CacheEntry } from './types';
+import type { CacheEntry, Logger } from './types';
 import { parse, ObjectType } from './parser';
 import { Provider } from './providers';
 
@@ -10,14 +10,17 @@ import { Provider } from './providers';
  * @returns The language, if found, parsed against the base.
  * @throws If the code does not match any of the cached languages.
  */
-export async function getLanguage<Base extends ObjectType, D>(
+export async function getLanguage<Base extends ObjectType>(
 	code: string,
 	base_lang: CacheEntry<Base>,
-	provider: Provider
+	provider: Provider,
+	log: Logger
 ): Promise<CacheEntry<Base>> {
 	// check language code
-	const found = await provider.get(code);
-	if (typeof found !== 'undefined') {
+	const found = await provider.get(code, log);
+	if (found === undefined) {
+		log('unknown language code =', code);
+	} else if (found !== null) {
 		// parse translation
 		return {
 			lang: code,
@@ -25,18 +28,6 @@ export async function getLanguage<Base extends ObjectType, D>(
 		};
 	}
 
-	if (code.includes('-')) {
-		const found_code = await getLanguage<Base, D>(
-			code.split('-')[0],
-			base_lang,
-			provider
-		);
-		if (typeof found_code !== 'undefined') {
-			return found_code;
-		}
-	}
-
-	console.error(new Error('unknown language code'));
 	return base_lang as unknown as CacheEntry<Base>;
 }
 

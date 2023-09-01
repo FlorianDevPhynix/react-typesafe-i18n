@@ -1,20 +1,13 @@
-import {
-	LocaleHandler,
-	LocaleDetector,
-	LocaleSetter,
-	LanguageProvider,
-} from './types';
+import { LocaleHandler, LocaleDetector, LocaleSetter } from './types';
+import { LangListProvider, LanguageData } from '../providers';
+import { type Logger } from '../types';
 import { detectLocale } from 'typesafe-i18n/detectors';
 
 export class Detector {
 	private detectors: LocaleDetector[];
 	private setter: LocaleSetter | undefined;
 
-	constructor(
-		private langProvider: LanguageProvider,
-		handler: LocaleHandler,
-		fallback?: LocaleDetector[]
-	) {
+	constructor(handler: LocaleHandler, fallback?: LocaleDetector[]) {
 		this.detectors =
 			fallback === undefined
 				? [handler.detector]
@@ -22,16 +15,19 @@ export class Detector {
 		this.setter = handler.setter;
 	}
 
-	public get(base: string): string {
-		return detectLocale(
-			base,
-			this.langProvider.getLang(),
-			...this.detectors
+	public async get(
+		base: string,
+		langProvider: LangListProvider<LanguageData>,
+		log: Logger
+	): Promise<string> {
+		const languages = (await langProvider.getLanguages(log))?.map(
+			(value) => value.code
 		);
+		return detectLocale(base, languages ?? [base], ...this.detectors);
 	}
 
-	public set(lang: string) {
-		this.setter?.(lang);
+	public set(lang: string, log: Logger) {
+		this.setter?.(lang, log);
 	}
 }
 

@@ -1,45 +1,6 @@
-import { defineConfig, type PluginOption, HttpProxy } from 'vite';
+import { defineConfig, HttpProxy } from 'vite';
 import react from '@vitejs/plugin-react';
-
-function TestServerPlugin(): PluginOption {
-	return {
-		name: 'test-server-plugin',
-		apply: 'serve',
-
-		configureServer(server) {
-			server.middlewares.use(
-				'/common-i18n/rest/translations/common/availableLanguages/test',
-				(req, res, next) => {
-					if (req.method === 'GET') {
-						res.end(
-							JSON.stringify([
-								{
-									direction: 'LTR',
-									icon: null,
-									name: 'English',
-									nativeName: 'English',
-									tag: 'en',
-									translatedName: 'English',
-								},
-								{
-									tag: 'it',
-									name: '', //Italiano
-									translatedName: 'Italian',
-									nativeName: 'Italiano',
-									direction: 'LTR',
-									icon: null,
-								},
-							])
-						);
-						return;
-					}
-
-					next();
-				}
-			);
-		},
-	};
-}
+import { LanguageServerPlugin } from './language-server';
 
 function add_proxylog(proxy: HttpProxy.Server) {
 	proxy.on('error', (err) => {
@@ -61,7 +22,7 @@ const backend_host = '10.41.144.40:20000';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-	plugins: [react(), TestServerPlugin()],
+	plugins: [react(), /* LogPlugin(), */ LanguageServerPlugin()],
 	server: {
 		proxy: {
 			'/common-i18n/rest/': {

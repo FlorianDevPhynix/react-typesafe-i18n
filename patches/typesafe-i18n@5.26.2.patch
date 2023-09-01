@@ -1,0 +1,13 @@
+diff --git a/types/runtime/src/core.d.mts b/types/runtime/src/core.d.mts
+index 274b04897cff4915dc6a505d78a455d4463d7a99..eae3dcda6bd26a1126a13d2f970ea970fcd5e85d 100644
+--- a/types/runtime/src/core.d.mts
++++ b/types/runtime/src/core.d.mts
+@@ -14,7 +14,7 @@ export type TranslationFunctions<T extends BaseTranslation | BaseTranslation[] |
+ };
+ type TypedTranslationFunction<Translation extends string, Formatters extends BaseFormatters> = (...args: Args<Translation, keyof Formatters>) => LocalizedString;
+ export type TypedTranslationFunctions<T extends BaseTranslation | BaseTranslation[] | Readonly<BaseTranslation> | Readonly<BaseTranslation[]> = BaseTranslation, Formatters extends BaseFormatters = BaseFormatters> = {
+-    [key in keyof T]: T[key] extends string ? TypedTranslationFunction<T[key], Formatters> : T[key] extends Record<any, any> ? TranslationFunctions<T[key]> : never;
++    [key in keyof T]: T[key] extends string ? TypedTranslationFunction<T[key], Formatters> : T[key] extends Record<any, any> ? TypedTranslationFunctions<T[key], Formatters> : never;
+ };
+ export type Locale = string;
+ export type Arguments = any[];

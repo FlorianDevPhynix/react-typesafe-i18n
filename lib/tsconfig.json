@@ -13,9 +13,9 @@
 		"skipLibCheck": true,
 		"strict": true,
 		"target": "ESNext",
-		"types": ["vite/client"]
+		"types": ["vite/client"],
+		"baseUrl": "."
 	},
 	"include": ["src"],
-	"exclude": ["src/ZodTranslation.ts"],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }
