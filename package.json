@@ -5,11 +5,11 @@
   "private": true,
   "scripts": {
     "dev": "pnpm --filter app run dev",
-    "build": "pnpm --filter react-typesafe-i18n run build",
-    "check": "pnpm --filter react-typesafe-i18n run check",
+    "build": "pnpm --filter react-safe-i18n run build",
+    "check": "pnpm --filter react-safe-i18n run check",
     "preview": "pnpm --filter app run preview",
-    "test": "pnpm --filter react-typesafe-i18n run test",
-    "test:ui": "pnpm --filter react-typesafe-i18n run test:ui"
+    "test": "pnpm --filter react-safe-i18n run test",
+    "test:ui": "pnpm --filter react-safe-i18n run test:ui"
   },
   "devDependencies": {
     "prettier": "^3.0.2",

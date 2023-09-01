@@ -1,6 +1,6 @@
 {
   "name": "react-safe-i18n",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "keywords": [
     "react",
@@ -48,7 +48,7 @@
     "test": "vitest",
     "test:ui": "vitest --ui",
     "coverage": "vitest run --coverage",
-    "release": "pnpm run build && esno scripts/bump.ts && bumpp --no-push",
+    "release": "pnpm run build && bumpp --no-push",
     "trace": "tsc --generateTrace trace && pnpm --package=@typescript/analyze-trace dlx analyze-trace ./trace"
   },
   "peerDependencies": {

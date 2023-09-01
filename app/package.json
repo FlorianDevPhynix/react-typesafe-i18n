@@ -12,7 +12,7 @@
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-typesafe-i18n": "workspace:../lib",
+    "react-safe-i18n": "workspace:../lib",
     "valibot": "^0.13.1"
   },
   "devDependencies": {
