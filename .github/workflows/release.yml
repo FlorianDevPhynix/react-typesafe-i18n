@@ -79,7 +79,7 @@ jobs:
         uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2
         with:
           name: build-package
-          path: lib/react-typesafe-i18n-*.tgz
+          path: lib/react-safe-i18n-*.tgz
 
   publish:
     name: Publish
@@ -109,11 +109,11 @@ jobs:
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ./lib/.npmrc
 
       - name: NPM Publish
-        run: cd lib/ && pnpm publish react-typesafe-i18n-*.tgz --ignore-scripts --no-git-checks
+        run: cd lib/ && pnpm publish react-safe-i18n-*.tgz --ignore-scripts --no-git-checks
 
       - name: Release Package
         uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844 # v1
         with:
           draft: true
           body_path: CHANGELOG.md
-          files: lib/react-typesafe-i18n-*.tgz
+          files: lib/react-safe-i18n-*.tgz

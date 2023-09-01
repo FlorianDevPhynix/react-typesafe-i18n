@@ -1,4 +1,4 @@
-# React Typesafe i18n
+# React Safe i18n
 
 A typesafe translation library that uses a base translation to achieve full safety in the React UI.
 Thanks to [typesafe-i18n](https://github.com/ivanhofer/typesafe-i18n) formatting/templating
