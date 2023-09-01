@@ -1,21 +1,21 @@
-import type { CacheEntry, Logger } from './types';
+import type { BaseCacheEntry, Logger } from './types';
 import { parse, ObjectType } from './parser';
 import { Provider } from './providers';
 
 /**
  * Select the language from the cache based on the provided code or it's parts, and parse it.
- * @param code The language code that is supposed to be selected.
- * @param base_lang The Base language.
- * @param language_cache List of languages with their translations.
+ * @param code - The language code that is supposed to be selected.
+ * @param base_lang - The Base language.
+ * @param language_cache - List of languages with their translations.
  * @returns The language, if found, parsed against the base.
  * @throws If the code does not match any of the cached languages.
  */
 export async function getLanguage<Base extends ObjectType>(
 	code: string,
-	base_lang: CacheEntry<Base>,
+	base_lang: BaseCacheEntry<Base>,
 	provider: Provider,
 	log: Logger
-): Promise<CacheEntry<Base>> {
+): Promise<BaseCacheEntry<Base>> {
 	// check language code
 	const found = await provider.get(code, log);
 	if (found === undefined) {
@@ -28,7 +28,7 @@ export async function getLanguage<Base extends ObjectType>(
 		};
 	}
 
-	return base_lang as unknown as CacheEntry<Base>;
+	return base_lang as unknown as BaseCacheEntry<Base>;
 }
 
 export type ExtendPromise<T> = {

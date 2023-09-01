@@ -134,16 +134,24 @@ class i18nBuilder<Base extends BaseTranslation, L extends LanguageData> {
 			direction: Direction;
 			func: i18nFuncType;
 		};
-		languages: LangList<L> | undefined;
+		languages: LangList<L>;
 	}> {
+		const langList = await this.langProvider.getLanguages(this.logger);
+
 		// merge default into base
 		if (this.default !== undefined) {
-			this.base = await getLanguage(
+			const result = await getLanguage(
 				this.default,
 				this.base,
 				this.provider,
 				this.logger
 			);
+			this.base = {
+				...result,
+				langData:
+					langList?.find((value) => value.code === result.lang) ??
+					this.base.langData,
+			};
 		}
 
 		const startLang = await (async () => {
@@ -167,8 +175,6 @@ class i18nBuilder<Base extends BaseTranslation, L extends LanguageData> {
 				this.logger('No I18nProvider found');
 			},
 		});
-
-		const langList = await this.langProvider.getLanguages(this.logger);
 
 		/* const getLangCode = async () => {
 			const code = this.getLang();
@@ -264,7 +270,9 @@ class i18nBuilder<Base extends BaseTranslation, L extends LanguageData> {
 					func: useContext(lang_func_Context) as i18nFuncType,
 				};
 			},
-			languages: langList,
+			languages: langList ?? [
+				{ code: this.base.lang, ...this.base.langData },
+			],
 		};
 	}
 }

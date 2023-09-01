@@ -70,7 +70,7 @@ export class AsyncProvider<L extends LanguageData>
  * make a object that provides the list of languages
  * @throws when callback failed, instead use {@link AsyncLangProvider}
  */
-export async function asyncInitListProvider<L extends Record<string, unknown>>(
+export async function asyncInitListProvider<L extends LanguageData>(
 	callback: LangCallback<L>
 ): Promise<LangListProvider<L>> {
 	const lang = await callback();
@@ -79,7 +79,7 @@ export async function asyncInitListProvider<L extends Record<string, unknown>>(
 	};
 }
 
-export function AsyncListProvider<L extends Record<string, unknown>>(
+export function AsyncListProvider<L extends LanguageData>(
 	callback: LangCallback<L>
 ): LangListProvider<L> & { langList: LangList<L> | undefined } {
 	return {
