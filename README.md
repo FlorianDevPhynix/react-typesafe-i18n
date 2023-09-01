@@ -310,8 +310,8 @@ For big translation, it is recommended to use [HTML preload](https://developer.m
 
 ## Example
 
-For a full example see the test app [here](https://github.com/FlorianDevPhynix/react-typesafe-i18n/tree/main/app)
+For a full example see this [Sandbox](https://stackblitz.com/edit/react-typesafe-i18n-example) or the projects test app [here](https://github.com/FlorianDevPhynix/react-typesafe-i18n/tree/main/app).
 
 ## Original Development
 
-[Stackblitz Sandbox](https://stackblitz.com/edit/react-custom-i18n?file=src%2FApp.tsx)
+This is the [Stackblitz Sandbox](https://stackblitz.com/edit/react-custom-i18n?file=src%2FApp.tsx) the development was started in. I tried to achieve my idea using zod but it did not work like I wanted it to, so I wrote the parse.

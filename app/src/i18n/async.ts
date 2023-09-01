@@ -1,6 +1,6 @@
 import * as v from 'valibot';
 
-import { AsyncProvider } from '@/lib';
+import { AsyncProvider } from 'react-typesafe-i18n';
 
 // language
 export const languageSchema = v.object({

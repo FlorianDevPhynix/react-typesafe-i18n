@@ -71,9 +71,6 @@ importers:
       react:
         specifier: 18.2.0
         version: 18.2.0
-      typesafe-i18n:
-        specifier: 5.26.2
-        version: 5.26.2(patch_hash=p7sehlvf4spulbrxl2cds2ql6i)(typescript@5.2.2)
       valibot:
         specifier: ^0.13.1
         version: 0.13.1
@@ -117,6 +114,9 @@ importers:
       eslint-plugin-tsdoc:
         specifier: ^0.2.17
         version: 0.2.17
+      typesafe-i18n:
+        specifier: 5.26.2
+        version: 5.26.2(patch_hash=p7sehlvf4spulbrxl2cds2ql6i)(typescript@5.2.2)
       utility-types:
         specifier: ^3.10.0
         version: 3.10.0
@@ -3040,7 +3040,7 @@ packages:
       typescript: '>=3.5.1'
     dependencies:
       typescript: 5.2.2
-    dev: false
+    dev: true
     patched: true
 
   /typescript@5.0.2:
@@ -3057,6 +3057,7 @@ packages:
     resolution: {integrity: sha512-mI4WrpHsbCIcwT9cF4FZvr80QUeKvsUsUvKDoR+X/7XHQH98xYD8YHZg7ANtz2GtZt/CBq2QJ0thkGJMHfqc1w==}
     engines: {node: '>=14.17'}
     hasBin: true
+    dev: true
 
   /ufo@1.2.0:
     resolution: {integrity: sha512-RsPyTbqORDNDxqAdQPQBpgqhWle1VcTSou/FraClYlHf6TZnQcGslpLcAphNR+sQW4q5lLWLbOsRlh9j24baQg==}
