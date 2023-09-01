@@ -63,7 +63,7 @@
     "@types/react": "18.2.15",
     "typesafe-i18n": "5.26.2",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
-    "@typescript-eslint/parser": "^6.0.0",
+    "@typescript-eslint/parser": "^6.5.0",
     "@vitejs/plugin-react": "^4.0.3",
     "@vitest/ui": "^0.34.1",
     "bumpp": "^9.1.0",
