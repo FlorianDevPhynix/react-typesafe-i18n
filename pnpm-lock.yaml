@@ -64,7 +64,7 @@ importers:
         version: 5.0.2
       vite:
         specifier: ^4.4.5
-        version: 4.4.5(@types/node@16.3.0)
+        version: 4.4.5(@types/node@20.5.9)
 
   lib:
     dependencies:
@@ -76,8 +76,8 @@ importers:
         version: 0.13.1
     devDependencies:
       '@types/node':
-        specifier: ^16.0.12
-        version: 16.3.0
+        specifier: ^20.5.9
+        version: 20.5.9
       '@types/react':
         specifier: 18.2.15
         version: 18.2.15
@@ -122,10 +122,10 @@ importers:
         version: 3.10.0
       vite:
         specifier: ^4.4.5
-        version: 4.4.5(@types/node@16.3.0)
+        version: 4.4.5(@types/node@20.5.9)
       vite-plugin-dts:
         specifier: ^3.5.2
-        version: 3.5.2(@types/node@16.3.0)(typescript@5.2.2)(vite@4.4.5)
+        version: 3.5.2(@types/node@20.5.9)(typescript@5.2.2)(vite@4.4.5)
       vitest:
         specifier: ^0.31.4
         version: 0.31.4(@vitest/ui@0.34.1)
@@ -662,23 +662,23 @@ packages:
       type-detect: 4.0.8
     dev: true
 
-  /@microsoft/api-extractor-model@7.27.6(@types/node@16.3.0):
+  /@microsoft/api-extractor-model@7.27.6(@types/node@20.5.9):
     resolution: {integrity: sha512-eiCnlayyum1f7fS2nA9pfIod5VCNR1G+Tq84V/ijDrKrOFVa598BLw145nCsGDMoFenV6ajNi2PR5WCwpAxW6Q==}
     dependencies:
       '@microsoft/tsdoc': 0.14.2
       '@microsoft/tsdoc-config': 0.16.2
-      '@rushstack/node-core-library': 3.59.7(@types/node@16.3.0)
+      '@rushstack/node-core-library': 3.59.7(@types/node@20.5.9)
     transitivePeerDependencies:
       - '@types/node'
     dev: true
 
-  /@microsoft/api-extractor@7.36.4(@types/node@16.3.0):
+  /@microsoft/api-extractor@7.36.4(@types/node@20.5.9):
     resolution: {integrity: sha512-21UECq8C/8CpHT23yiqTBQ10egKUacIpxkPyYR7hdswo/M5yTWdBvbq+77YC9uPKQJOUfOD1FImBQ1DzpsdeQQ==}
     dependencies:
-      '@microsoft/api-extractor-model': 7.27.6(@types/node@16.3.0)
+      '@microsoft/api-extractor-model': 7.27.6(@types/node@20.5.9)
       '@microsoft/tsdoc': 0.14.2
       '@microsoft/tsdoc-config': 0.16.2
-      '@rushstack/node-core-library': 3.59.7(@types/node@16.3.0)
+      '@rushstack/node-core-library': 3.59.7(@types/node@20.5.9)
       '@rushstack/rig-package': 0.4.1
       '@rushstack/ts-command-line': 4.15.2
       colors: 1.2.5
@@ -755,7 +755,7 @@ packages:
       picomatch: 2.3.1
     dev: true
 
-  /@rushstack/node-core-library@3.59.7(@types/node@16.3.0):
+  /@rushstack/node-core-library@3.59.7(@types/node@20.5.9):
     resolution: {integrity: sha512-ln1Drq0h+Hwa1JVA65x5mlSgUrBa1uHL+V89FqVWQgXd1vVIMhrtqtWGQrhTnFHxru5ppX+FY39VWELF/FjQCw==}
     peerDependencies:
       '@types/node': '*'
@@ -763,7 +763,7 @@ packages:
       '@types/node':
         optional: true
     dependencies:
-      '@types/node': 16.3.0
+      '@types/node': 20.5.9
       colors: 1.2.5
       fs-extra: 7.0.1
       import-lazy: 4.0.0
@@ -815,8 +815,8 @@ packages:
     resolution: {integrity: sha512-Hr5Jfhc9eYOQNPYO5WLDq/n4jqijdHNlDXjuAQkkt+mWdQR+XJToOHrsD4cPaMXpn6KO7y2+wM8AZEs8VpBLVA==}
     dev: true
 
-  /@types/node@16.3.0:
-    resolution: {integrity: sha512-OydMCocGMGqw/1BnWbhtK+AtwyWTOigtrQlRe57OQmTNcI3HKlVI5FGlh+c4mSqInMPLynFrTlYjfajPu9O/eQ==}
+  /@types/node@20.5.9:
+    resolution: {integrity: sha512-PcGNd//40kHAS3sTlzKB9C9XL4K0sTup8nbG5lC14kzEteTNuAFh9u5nA0o5TWnSG2r/JNPRXFVcHJIIeRlmqQ==}
     dev: true
 
   /@types/prop-types@15.7.5:
@@ -1102,7 +1102,7 @@ packages:
       '@babel/plugin-transform-react-jsx-self': 7.22.5(@babel/core@7.22.10)
       '@babel/plugin-transform-react-jsx-source': 7.22.5(@babel/core@7.22.10)
       react-refresh: 0.14.0
-      vite: 4.4.5(@types/node@16.3.0)
+      vite: 4.4.5(@types/node@20.5.9)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -3104,7 +3104,7 @@ packages:
     engines: {node: '>= 0.10'}
     dev: true
 
-  /vite-node@0.31.4(@types/node@16.3.0):
+  /vite-node@0.31.4(@types/node@20.5.9):
     resolution: {integrity: sha512-uzL377GjJtTbuc5KQxVbDu2xfU/x0wVjUtXQR2ihS21q/NK6ROr4oG0rsSkBBddZUVCwzfx22in76/0ZZHXgkQ==}
     engines: {node: '>=v14.18.0'}
     dependencies:
@@ -3113,7 +3113,7 @@ packages:
       mlly: 1.4.0
       pathe: 1.1.1
       picocolors: 1.0.0
-      vite: 4.4.5(@types/node@16.3.0)
+      vite: 4.4.5(@types/node@20.5.9)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -3125,7 +3125,7 @@ packages:
       - terser
     dev: true
 
-  /vite-plugin-dts@3.5.2(@types/node@16.3.0)(typescript@5.2.2)(vite@4.4.5):
+  /vite-plugin-dts@3.5.2(@types/node@20.5.9)(typescript@5.2.2)(vite@4.4.5):
     resolution: {integrity: sha512-iKc851+jdHEoN1ifbOEsoMs+/Zg26PE1EyO2Jc+4apOWRoaeK2zRJnaStgUuJaVaEcAjTqWzpNgCAMq7iO6DWA==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
@@ -3135,13 +3135,13 @@ packages:
       vite:
         optional: true
     dependencies:
-      '@microsoft/api-extractor': 7.36.4(@types/node@16.3.0)
+      '@microsoft/api-extractor': 7.36.4(@types/node@20.5.9)
       '@rollup/pluginutils': 5.0.3
       '@vue/language-core': 1.8.8(typescript@5.2.2)
       debug: 4.3.4
       kolorist: 1.8.0
       typescript: 5.2.2
-      vite: 4.4.5(@types/node@16.3.0)
+      vite: 4.4.5(@types/node@20.5.9)
       vue-tsc: 1.8.8(typescript@5.2.2)
     transitivePeerDependencies:
       - '@types/node'
@@ -3149,7 +3149,7 @@ packages:
       - supports-color
     dev: true
 
-  /vite@4.4.5(@types/node@16.3.0):
+  /vite@4.4.5(@types/node@20.5.9):
     resolution: {integrity: sha512-4m5kEtAWHYr0O1Fu7rZp64CfO1PsRGZlD3TAB32UmQlpd7qg15VF7ROqGN5CyqN7HFuwr7ICNM2+fDWRqFEKaA==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
@@ -3177,7 +3177,7 @@ packages:
       terser:
         optional: true
     dependencies:
-      '@types/node': 16.3.0
+      '@types/node': 20.5.9
       esbuild: 0.18.20
       postcss: 8.4.28
       rollup: 3.28.0
@@ -3218,7 +3218,7 @@ packages:
     dependencies:
       '@types/chai': 4.3.5
       '@types/chai-subset': 1.3.3
-      '@types/node': 16.3.0
+      '@types/node': 20.5.9
       '@vitest/expect': 0.31.4
       '@vitest/runner': 0.31.4
       '@vitest/snapshot': 0.31.4
@@ -3239,8 +3239,8 @@ packages:
       strip-literal: 1.3.0
       tinybench: 2.5.0
       tinypool: 0.5.0
-      vite: 4.4.5(@types/node@16.3.0)
-      vite-node: 0.31.4(@types/node@16.3.0)
+      vite: 4.4.5(@types/node@20.5.9)
+      vite-node: 0.31.4(@types/node@20.5.9)
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
       - less
