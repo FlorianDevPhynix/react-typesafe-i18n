@@ -4,34 +4,33 @@ updates:
     directory: /
     schedule:
       interval: weekly
-
+  
   - package-ecosystem: npm
     directory: /app
     schedule:
       interval: weekly
-    target-branch: "dev"
+    target-branch: dev
     commit-message:
-      prefix: "[app] "
-
- - package-ecosystem: npm
+      prefix: '[app] '
+  
+  - package-ecosystem: npm
     directory: /lib
     schedule:
       interval: daily
     commit-message:
-      prefix: "[lib] "
+      prefix: '[lib] '
     allow:
       - dependency-type: development
     ignore:
-      - dependency-name: "@types/node"
-      - dependency-name: "@types/react"
-      - dependency-name: "typesafe-i18n"
-
+      - dependency-name: '@types/node'
+      - dependency-name: '@types/react'
+      - dependency-name: typesafe-i18n
+  
   - package-ecosystem: npm
     directory: /
     schedule:
       interval: weekly
     allow:
-      - dependency-name: "prettier
+      - dependency-name: prettier
     ignore:
-      - dependency-name: "typescript"
-      
+      - dependency-name: typescript
