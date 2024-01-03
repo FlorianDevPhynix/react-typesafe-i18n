@@ -1,6 +1,6 @@
 {
-  "name": "react-typesafe-i18n",
-  "version": "1.0.0",
+  "name": "react-safe-i18n",
+  "version": "1.0.1",
   "description": "",
   "keywords": [
     "react",
@@ -48,7 +48,7 @@
     "test": "vitest",
     "test:ui": "vitest --ui",
     "coverage": "vitest run --coverage",
-    "release": "pnpm run build && esno scripts/bump.ts && bumpp --no-push",
+    "release": "pnpm run build && bumpp --no-push",
     "trace": "tsc --generateTrace trace && pnpm --package=@typescript/analyze-trace dlx analyze-trace ./trace"
   },
   "peerDependencies": {
@@ -64,7 +64,7 @@
     "typesafe-i18n": "5.26.2",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
-    "@vitejs/plugin-react": "^4.0.3",
+    "@vitejs/plugin-react": "^4.0.4",
     "@vitest/ui": "^0.34.1",
     "bumpp": "^9.1.0",
     "eslint": "^8.45.0",
@@ -74,7 +74,7 @@
     "eslint-plugin-react-refresh": "^0.4.3",
     "eslint-plugin-tsdoc": "^0.2.17",
     "utility-types": "^3.10.0",
-    "vite": "^4.4.5",
+    "vite": "^4.4.9",
     "vite-plugin-dts": "^3.5.3",
     "vitest": "^0.31.4"
   }

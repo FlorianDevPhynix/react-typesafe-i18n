@@ -41,7 +41,7 @@ export default function Home() {
 			<p className="read-the-docs">{t.home.docs()}</p>
 			{lang} {direction}
 			<div>
-				{languages?.map((value) => (
+				{languages.map((value) => (
 					<button
 						onClick={() => f.switchLang(value.code)}
 						key={value.code}

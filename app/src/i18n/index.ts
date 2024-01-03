@@ -1,13 +1,13 @@
 import type {
 	CacheEntry /* , i18nDefinition, Strict, NonStrict */,
-} from 'react-typesafe-i18n';
+} from 'react-safe-i18n';
 import {
 	i18nBuilder,
 	//StaticProvider,
 	Detector,
 	LocalStorageDetector,
 	NavigatorDetector,
-} from 'react-typesafe-i18n';
+} from 'react-safe-i18n';
 
 import { Language, asyncProvider } from './async';
 
