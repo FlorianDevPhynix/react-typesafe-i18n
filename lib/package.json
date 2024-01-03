@@ -77,6 +77,6 @@
     "utility-types": "^3.10.0",
     "vite": "^4.4.9",
     "vite-plugin-dts": "^3.5.3",
-    "vitest": "^0.31.4"
+    "vitest": "^1.1.1"
   }
 }
