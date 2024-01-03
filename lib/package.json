@@ -75,7 +75,7 @@
     "eslint-plugin-tsdoc": "^0.2.17",
     "utility-types": "^3.10.0",
     "vite": "^4.4.9",
-    "vite-plugin-dts": "^3.5.2",
+    "vite-plugin-dts": "^3.5.3",
     "vitest": "^0.31.4"
   }
 }

@@ -124,8 +124,8 @@ importers:
         specifier: ^4.4.9
         version: 4.4.9(@types/node@16.3.0)
       vite-plugin-dts:
-        specifier: ^3.5.2
-        version: 3.5.2(@types/node@16.3.0)(typescript@5.2.2)(vite@4.4.9)
+        specifier: ^3.5.3
+        version: 3.5.3(@types/node@16.3.0)(typescript@5.2.2)(vite@4.4.9)
       vitest:
         specifier: ^0.31.4
         version: 0.31.4(@vitest/ui@0.34.1)
@@ -675,6 +675,7 @@ packages:
 
   /@microsoft/api-extractor@7.36.4(@types/node@16.3.0):
     resolution: {integrity: sha512-21UECq8C/8CpHT23yiqTBQ10egKUacIpxkPyYR7hdswo/M5yTWdBvbq+77YC9uPKQJOUfOD1FImBQ1DzpsdeQQ==}
+    hasBin: true
     dependencies:
       '@microsoft/api-extractor-model': 7.27.6(@types/node@16.3.0)
       '@microsoft/tsdoc': 0.14.2
@@ -2113,6 +2114,7 @@ packages:
 
   /he@1.2.0:
     resolution: {integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==}
+    hasBin: true
     dev: true
 
   /https-proxy-agent@5.0.1:
@@ -2769,6 +2771,7 @@ packages:
 
   /resolve@1.22.4:
     resolution: {integrity: sha512-PXNdCiPqDqeUou+w1C2eTQbNfxKSuMxqTCuvlmmMsk1NWHL5fRrhY6Pl0qEYYc6+QqGClco1Qj8XnjPego4wfg==}
+    hasBin: true
     dependencies:
       is-core-module: 2.13.0
       path-parse: 1.0.7
@@ -3059,6 +3062,7 @@ packages:
   /typescript@5.0.4:
     resolution: {integrity: sha512-cW9T5W9xY37cc+jfEnaUvX91foxtHkza3Nw3wkoF4sSlKn0MONdkdEndig/qPBWXNkmplh3NzayQzCiHM4/hqw==}
     engines: {node: '>=12.20'}
+    hasBin: true
     dev: true
 
   /typescript@5.2.2:
@@ -3133,8 +3137,8 @@ packages:
       - terser
     dev: true
 
-  /vite-plugin-dts@3.5.2(@types/node@16.3.0)(typescript@5.2.2)(vite@4.4.9):
-    resolution: {integrity: sha512-iKc851+jdHEoN1ifbOEsoMs+/Zg26PE1EyO2Jc+4apOWRoaeK2zRJnaStgUuJaVaEcAjTqWzpNgCAMq7iO6DWA==}
+  /vite-plugin-dts@3.5.3(@types/node@16.3.0)(typescript@5.2.2)(vite@4.4.9):
+    resolution: {integrity: sha512-h94j/+SR1PhLR9jnEtcjZILagE2QZBAV8V1y3T2Ujcet1VI0Et4dZSU1W8fbnp6obB7B3/b8hArqdi2/9HuH+w==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
       typescript: '*'
@@ -3324,6 +3328,7 @@ packages:
   /z-schema@5.0.5:
     resolution: {integrity: sha512-D7eujBWkLa3p2sIpJA0d1pr7es+a7m0vFAnZLlCEKq/Ij2k0MLi9Br2UPxoxdYystm5K1yeBGzub0FlYUEWj2Q==}
     engines: {node: '>=8.0.0'}
+    hasBin: true
     dependencies:
       lodash.get: 4.4.2
       lodash.isequal: 4.5.0
