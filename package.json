@@ -11,9 +11,6 @@
     "test": "pnpm --filter react-safe-i18n run test",
     "test:ui": "pnpm --filter react-safe-i18n run test:ui"
   },
-  "devDependencies": {
-    "prettier": "^3.0.2"
-  },
   "engines": {
     "node": ">=16",
     "pnpm": ">=8"

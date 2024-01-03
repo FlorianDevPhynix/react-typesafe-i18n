@@ -38,11 +38,3 @@ updates:
       eslint:
         patterns:
           - "*eslint*"
-
-  - package-ecosystem: npm
-    directory: /
-    schedule:
-      interval: weekly
-    allow:
-      - dependency-type: development
-      - dependency-name: prettier
