@@ -9,5 +9,8 @@ const translation: Definition<false> = {
 
 export const lang: Language = {
 	lang: 'it',
+	langData: {
+		name: 'Italiano',
+	},
 	translation,
 } as const;

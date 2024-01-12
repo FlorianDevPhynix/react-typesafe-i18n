@@ -6,13 +6,13 @@ export const translation = {
 
 export default function About() {
 	const t = useTranslation();
-	const [l, f] = useLanguage();
+	const { lang, func: f } = useLanguage();
 
 	return (
 		<>
 			<h1>{t.about.title()}</h1>
 			<div className="card">
-				<p className="read-the-docs">{l}</p>
+				<p className="read-the-docs">{lang}</p>
 				<button
 					onClick={() => {
 						f.switchLang('de');

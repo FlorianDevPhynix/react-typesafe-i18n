@@ -38,7 +38,8 @@ export type Language<L, T> = { lang: L; translation: T };
 /**
  * Language entry in the cache
  */
-export type CacheEntry<D> = Language<string, D>;
+//export type CacheEntry<D> = Language<string, D>;
+export type BaseCacheEntry<D> = Language<string, D>;
 
 export type Strict<T> = DeepStringify<T>;
 export type NonStrict<T> = DeepPartial<Strict<T>>;
@@ -49,3 +50,5 @@ export type NonStrict<T> = DeepPartial<Strict<T>>;
 export type i18nDefinition<T, S extends boolean> = S extends true
 	? Strict<T>
 	: NonStrict<T>;
+
+export type Logger = typeof console.error;

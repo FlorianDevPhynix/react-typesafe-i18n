@@ -1,0 +1,13 @@
+name: Checkout Lib
+description: Only checkout files needed for library
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout
+      uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
+      with:
+        ref: dev
+        sparse-checkout: |
+          .github
+          lib

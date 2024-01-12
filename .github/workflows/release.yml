@@ -1,0 +1,119 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+
+      - name: Setup
+        uses: ./.github/actions/full-setup
+
+      - name: Run Vitest
+        run: cd ./lib && pnpm test
+
+  check:
+    name: Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+
+      - name: Setup
+        uses: ./.github/actions/full-setup
+
+      - name: Run lint
+        run: cd ./lib && pnpm run lint
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    needs: [check]
+    steps:
+      - name: Security Setup
+        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
+        with:
+          egress-policy: block
+          disable-sudo: true
+          allowed-endpoints: >
+            github.com:443
+            api.github.com:443
+            nodejs.org:443
+            registry.npmjs.org:443
+
+      - name: Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+
+      - name: Setup
+        uses: ./.github/actions/full-setup
+
+      - name: Build
+        run: cd ./lib && pnpm build
+
+      - name: Upload build output
+        uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392 # v4.0.0
+        with:
+          name: build-output
+          path: lib/dist/
+
+      - name: Prepare Package
+        run: |
+          mv README.md lib/
+          mv LICENSE.md lib/
+          mv CHANGELOG.md lib/
+
+      - name: Package build output
+        run: cd ./lib && pnpm pack
+
+      - name: Upload Package
+        uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392 # v4.0.0
+        with:
+          name: build-package
+          path: lib/react-safe-i18n-*.tgz
+
+  publish:
+    name: Publish
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    needs: build
+    permissions:
+      contents: write
+    environment: Release
+    steps:
+      - name: Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+        with:
+          sparse-checkout: |
+            .github
+            lib
+
+      - uses: actions/download-artifact@f44cd7b40bfd40b6aa1cc1b9b5b7bf03d3c67110 # v4.1.0
+        with:
+          name: build-package
+          path: lib/
+
+      - name: Setup
+        uses: ./.github/actions/setup
+
+      - name: Add .npmrc for Publish
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ./lib/.npmrc
+
+      - name: NPM Publish
+        run: cd lib/ && pnpm publish react-safe-i18n-*.tgz --ignore-scripts --no-git-checks
+
+      - name: Release Package
+        uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844 # v1
+        with:
+          draft: true
+          body_path: CHANGELOG.md
+          files: lib/react-safe-i18n-*.tgz

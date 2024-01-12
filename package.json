@@ -1,21 +1,23 @@
 {
   "name": "react-i18n-project",
-  "description": "",
   "author": "Florian Stemmler",
   "license": "MIT",
   "private": true,
   "scripts": {
     "dev": "pnpm --filter app run dev",
-    "build": "pnpm --filter react-typesafe-i18n run build",
-    "test": "pnpm --filter react-typesafe-i18n run test",
-    "test:ui": "pnpm --filter react-typesafe-i18n run test:ui"
-  },
-  "devDependencies": {
-    "prettier": "^3.0.2",
-    "typescript": "^5.0.2"
+    "build": "pnpm --filter react-safe-i18n run build",
+    "check": "pnpm --filter react-safe-i18n run check",
+    "preview": "pnpm --filter app run preview",
+    "test": "pnpm --filter react-safe-i18n run test",
+    "test:ui": "pnpm --filter react-safe-i18n run test:ui"
   },
   "engines": {
     "node": ">=16",
     "pnpm": ">=8"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "typesafe-i18n@5.26.2": "patches/typesafe-i18n@5.26.2.patch"
+    }
   }
 }
