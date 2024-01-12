@@ -8,6 +8,10 @@ in the translations is fully typesafe ([Syntax](#formattingtemplating-syntax)).
 Something similar to [this](https://github.com/ivanhofer/typesafe-i18n/blob/main/packages/adapter-react/README.md#recipes)
 will be implemented in the future.
 
+## Example
+
+For a full example see this [Sandbox](https://stackblitz.com/edit/react-typesafe-i18n-example) or the projects test app [here](https://github.com/FlorianDevPhynix/react-typesafe-i18n/tree/main/app).
+
 ## Usage
 
 It is recommended to put all translation code into a i18n folder in the `src` directory of your project.
@@ -308,9 +312,13 @@ For big translation, it is recommended to use [HTML preload](https://developer.m
 </head>
 ```
 
-## Example
+## Roadmap
 
-For a full example see this [Sandbox](https://stackblitz.com/edit/react-typesafe-i18n-example) or the projects test app [here](https://github.com/FlorianDevPhynix/react-typesafe-i18n/tree/main/app).
+- [ ] Detector async set
+- [ ] Typed langData
+- [ ] Custom lang resolve algorithm (Detector)
+- [ ] formatter user setting ...
+- [ ] explore text direction
 
 ## Original Development
 

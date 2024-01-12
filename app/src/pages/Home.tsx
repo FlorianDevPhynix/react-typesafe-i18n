@@ -46,7 +46,7 @@ export default function Home() {
 						onClick={() => f.switchLang(value.code)}
 						key={value.code}
 					>
-						{value.name}
+						{value.langData.name}
 					</button>
 				))}
 				<button onClick={() => f.resetLang()}>Reset</button>

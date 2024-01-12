@@ -8,46 +8,43 @@ import {
 	//BaseTranslation as objectBaseTranslation,
 } from 'typesafe-i18n';
 
-import type { BaseTranslation, Logger } from './types';
+import type { BaseTranslation, Translation, LanguageData, Direction, Logger } from './types';
 import type {
 	Provider,
 	LangListProvider,
-	LanguageData,
-	LangList,
-	Direction,
-	CacheEntry,
+	LangList
 } from './providers';
 import type { Detector } from './detectors';
 
-export type i18nFuncType = {
-	switchLang: (code: string) => void;
-	getLang: () => string;
+export type i18nFuncType<C extends string> = {
+	switchLang: (code: C) => void;
+	getLang: () => C;
 	resetLang: () => void;
 };
 
-class i18nBuilder<Base extends BaseTranslation, L extends LanguageData> {
-	private detector: Detector | undefined = undefined;
-	private provider: Provider;
-	private langProvider: LangListProvider<L>;
+class i18nBuilder<C extends string, D extends LanguageData, Base extends BaseTranslation> {
+	private detector: Detector<C, D> | undefined = undefined;
+	private provider: Provider<C>;
+	private langProvider: LangListProvider<C, D>;
 	private logger: Logger = (...data) => console.error(data.join(' >> '));
 
 	/** can be set with {@link i18nBuilder.addDefault} */
-	private default: string | undefined;
+	private default: C | undefined;
 
 	constructor(
-		base: CacheEntry<Base, L>,
-		provider: Provider & LangListProvider<L>
+		base: Translation<C, D, Base>,
+		provider: Provider<C> & LangListProvider<C, D>
 	);
 	constructor(
-		base: CacheEntry<Base, L>,
-		provider: Provider,
-		langProvider: LangListProvider<L>
+		base: Translation<C, D, Base>,
+		provider: Provider<C>,
+		langProvider: LangListProvider<C, D>
 	);
 	constructor(
 		/** base/fallback translation */
-		private base: CacheEntry<Base, L>,
-		provider: Provider & LangListProvider<L>,
-		langProvider?: LangListProvider<L>
+		private base: Translation<C, D, Base>,
+		provider: Provider<C> & LangListProvider<C, D>,
+		langProvider?: LangListProvider<C, D>
 	) {
 		this.provider = provider;
 		if (langProvider === undefined) {
@@ -69,7 +66,7 @@ class i18nBuilder<Base extends BaseTranslation, L extends LanguageData> {
 	 * override the default language (default: base language code)
 	 * @param lang - language code
 	 */
-	public addDefault(lang: string) {
+	public addDefault(lang: C) {
 		this.default = lang;
 	}
 
@@ -78,39 +75,39 @@ class i18nBuilder<Base extends BaseTranslation, L extends LanguageData> {
 	 * @param language_codes - codes of all the possibel languages
 	 * @param detectors - The used locale detector(s).
 	 */
-	public addDetector(detector: Detector) {
+	public addDetector(detector: Detector<C, D>) {
 		this.detector = detector;
 	}
 
 	// utilities
 	private getLang() {
 		if (this.detector === undefined) {
-			return this.base.lang;
+			return this.base.code;
 		}
 
 		return this.detector.get(
-			this.base.lang,
+			this.base.code,
 			this.langProvider,
 			this.logger
 		);
 	}
 
-	private setLang(code: string) {
+	private setLang(code: C) {
 		if (typeof this.detector === 'undefined') {
-			return this.base.lang;
+			return this.base.code;
 		}
 
 		return this.detector.set(code, this.logger);
 	}
 
-	private async resolveLang(code: string) {
+	private async resolveLang(code: C) {
 		return (await this.provider.get(code, this.logger))
 			? code
-			: this.base.lang;
+			: this.base.code;
 	}
 
-	private async genTranslation(code: string) {
-		const result = await getLanguage<Base>(
+	private async genTranslation(code: C) {
+		const result = await getLanguage<C, D, Base>(
 			code,
 			this.base,
 			this.provider,
@@ -118,8 +115,8 @@ class i18nBuilder<Base extends BaseTranslation, L extends LanguageData> {
 		);
 
 		return {
-			lang: result.lang,
-			translation: typesafeI18nObject(result.lang, result.translation),
+			lang: result.code,
+			translation: typesafeI18nObject(result.code, result.translation),
 		};
 	}
 
@@ -130,27 +127,27 @@ class i18nBuilder<Base extends BaseTranslation, L extends LanguageData> {
 			typeof typesafeI18nObject<string, Base>
 		>;
 		useLanguage: () => {
-			lang: string;
+			lang: C;
 			direction: Direction;
-			func: i18nFuncType;
+			func: i18nFuncType<C>;
 		};
-		languages: LangList<L>;
+		languages: LangList<C, D>;
 	}> {
 		const langList = await this.langProvider.getLanguages(this.logger);
 
 		// merge default into base
 		if (this.default !== undefined) {
-			const result = await getLanguage(
+			const result = await getLanguage<C, D, Base>(
 				this.default,
 				this.base,
 				this.provider,
 				this.logger
 			);
+			const lang = langList?.find((value) => value.code === result.code) ?? this.base;
 			this.base = {
 				...result,
-				langData:
-					langList?.find((value) => value.code === result.lang) ??
-					this.base.langData,
+				direction: lang.direction,
+				langData: lang.langData,
 			};
 		}
 
@@ -163,13 +160,13 @@ class i18nBuilder<Base extends BaseTranslation, L extends LanguageData> {
 		const langContext = createContext(startLang.lang);
 		//const languageListContext = createContext(startLang.translation);
 
-		const lang_func_Context = createContext<i18nFuncType>({
+		const lang_func_Context = createContext<i18nFuncType<C>>({
 			switchLang: () => {
 				this.logger('No I18nProvider found');
 			},
 			getLang: () => {
 				this.logger('No I18nProvider found');
-				return this.base.lang;
+				return this.base.code;
 			},
 			resetLang: () => {
 				this.logger('No I18nProvider found');
@@ -224,8 +221,8 @@ class i18nBuilder<Base extends BaseTranslation, L extends LanguageData> {
 					() => startLang.translation
 				);
 
-				const i18nFunc: i18nFuncType = {
-					switchLang: async (code: string) => {
+				const i18nFunc: i18nFuncType<C> = {
+					switchLang: async (code: C) => {
 						if (lang === code) return;
 						const result = await this.genTranslation(code);
 						setTranslation(() => result.translation);
@@ -233,7 +230,7 @@ class i18nBuilder<Base extends BaseTranslation, L extends LanguageData> {
 						setLang(result.lang);
 					},
 					getLang: () => lang,
-					resetLang: () => i18nFunc.switchLang(this.base.lang),
+					resetLang: () => i18nFunc.switchLang(this.base.code),
 				};
 
 				return (
@@ -251,27 +248,27 @@ class i18nBuilder<Base extends BaseTranslation, L extends LanguageData> {
 				return useContext(translationContext);
 			},
 			useLanguage: (): {
-				lang: string;
+				lang: C;
 				direction: Direction;
-				func: i18nFuncType;
+				func: i18nFuncType<C>;
 			} => {
 				const lang = useContext(langContext);
 
 				return {
 					lang,
 					direction: useMemo(() => {
-						if (langList === undefined) return 'LTR';
+						if (langList === undefined) return 'ltr';
 
 						return (
 							langList.find((value) => value.code === lang)
-								?.direction ?? 'LTR'
+								?.direction ?? 'ltr'
 						);
 					}, [lang]),
-					func: useContext(lang_func_Context) as i18nFuncType,
+					func: useContext(lang_func_Context) as i18nFuncType<C>,
 				};
 			},
 			languages: langList ?? [
-				{ code: this.base.lang, ...this.base.langData },
+				{ code: this.base.code, direction: this.base.direction, langData: this.base.langData },
 			],
 		};
 	}

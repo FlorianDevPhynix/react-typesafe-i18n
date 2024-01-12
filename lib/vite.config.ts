@@ -28,7 +28,7 @@ export default defineConfig({
 			},
 		},
 		rollupOptions: {
-			external: ['react', 'valibot'],
+			external: ['react'],
 			output: {
 				// Since we publish our ./src folder, there's no point
 				// in bloating sourcemaps with another copy of it.

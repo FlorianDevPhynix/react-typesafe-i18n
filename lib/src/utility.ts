@@ -1,6 +1,8 @@
-import type { BaseCacheEntry, Logger } from './types';
-import { parse, ObjectType } from './parser';
+import type { Translation, LanguageData, Logger } from './types';
+import { isTruthy, uniqueArray } from 'typesafe-utils'
+import { parse, type ObjectType } from './parser';
 import { Provider } from './providers';
+import { LocaleDetector } from './detectors';
 
 /**
  * Select the language from the cache based on the provided code or it's parts, and parse it.
@@ -10,12 +12,12 @@ import { Provider } from './providers';
  * @returns The language, if found, parsed against the base.
  * @throws If the code does not match any of the cached languages.
  */
-export async function getLanguage<Base extends ObjectType>(
-	code: string,
-	base_lang: BaseCacheEntry<Base>,
-	provider: Provider,
+export async function getLanguage<C extends string, D extends LanguageData, Base extends ObjectType>(
+	code: C,
+	base_lang: Translation<C, D, Base>,
+	provider: Provider<C>,
 	log: Logger
-): Promise<BaseCacheEntry<Base>> {
+): Promise<Omit<Translation<C, D, Base>, 'direction' | 'langData'>> {
 	// check language code
 	const found = await provider.get(code, log);
 	if (found === undefined) {
@@ -23,12 +25,42 @@ export async function getLanguage<Base extends ObjectType>(
 	} else if (found !== null) {
 		// parse translation
 		return {
-			lang: code,
+			code,
 			translation: parse<Base>(base_lang.translation, found),
 		};
 	}
 
-	return base_lang as unknown as BaseCacheEntry<Base>;
+	return base_lang as unknown as Translation<C, D, Base>;
+}
+
+/** Copied from https://github.com/ivanhofer/typesafe-i18n/blob/main/packages/detectors/src/detect.mts */
+export async function detectLocale<C extends string>(
+	baseLocale: C,
+	availableLocales: C[],
+	...detectors: LocaleDetector[]
+): Promise<C> {
+	for (const detector of detectors) {
+		const found = await findMatchingLocale<C>(availableLocales, detector)
+		if (found) return found
+	}
+
+	return baseLocale
+}
+
+/** Also copied from https://github.com/ivanhofer/typesafe-i18n/blob/main/packages/detectors/src/detect.mts */
+async function findMatchingLocale<C extends string>(availableLocales: C[], detector: LocaleDetector): Promise<C | undefined> {
+	const detectedLocales = (await detector()).map((locale) => locale.toLowerCase())
+	// also include locales without country code e.g. if only 'en-US' is detected, we should also look for 'en'
+	const localesToMatch = uniqueArray(detectedLocales.flatMap((locale) => [locale, locale.split('-')[0]]))
+
+	const lowercasedLocales = availableLocales.map((locale) => locale.toLowerCase())
+
+	return localesToMatch
+		.map((locale) => {
+			const matchedIndex = lowercasedLocales.findIndex((l) => l === locale)
+			return matchedIndex >= 0 && availableLocales[matchedIndex]
+		})
+		.find(isTruthy)
 }
 
 export type ExtendPromise<T> = {

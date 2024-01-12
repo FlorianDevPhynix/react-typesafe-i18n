@@ -1,32 +1,32 @@
 import { type PluginOption } from 'vite';
-
-type Language = {
-	code: string;
-	name: string;
-	direction: 'LTR' | 'RTL';
-	icon: string | null;
-};
+import { Language } from './src/i18n/async/async';
 type Translation = Record<string, unknown>;
 
 export function LanguageServerPlugin(): PluginOption {
 	const languages: Language[] = [
 		{
 			code: 'en',
-			name: 'English',
-			direction: 'LTR',
-			icon: null,
+			direction: 'ltr',
+			langData: {
+				name: 'English',
+				icon: null,
+			}
 		},
 		{
 			code: 'de',
-			name: 'Deutsch',
-			direction: 'LTR',
-			icon: null,
+			direction: 'ltr',
+			langData: {
+				name: 'Deutsch',
+				icon: null,
+			}
 		},
 		{
 			code: 'it',
-			name: 'Italiano',
-			direction: 'LTR',
-			icon: null,
+			direction: 'ltr',
+			langData: {
+				name: 'Italiano',
+				icon: null,
+			}
 		},
 	];
 

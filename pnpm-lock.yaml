@@ -64,9 +64,6 @@ importers:
       react:
         specifier: 18.2.0
         version: 18.2.0
-      valibot:
-        specifier: ^0.13.1
-        version: 0.13.1
     devDependencies:
       '@types/node':
         specifier: ^16.0.12
@@ -113,12 +110,18 @@ importers:
       typesafe-i18n:
         specifier: 5.26.2
         version: 5.26.2(patch_hash=p7sehlvf4spulbrxl2cds2ql6i)(typescript@5.0.2)
+      typesafe-utils:
+        specifier: ^1.16.2
+        version: 1.16.2
       typescript:
         specifier: 5.0.2
         version: 5.0.2
       utility-types:
         specifier: ^3.10.0
         version: 3.10.0
+      valibot:
+        specifier: ^0.13.1
+        version: 0.13.1
       vite:
         specifier: ^4.4.9
         version: 4.4.9(@types/node@16.3.0)
@@ -2969,6 +2972,10 @@ packages:
     dev: true
     patched: true
 
+  /typesafe-utils@1.16.2:
+    resolution: {integrity: sha512-5Ej1sd5V541LPxlJEs4JKpsmF0zvMcwakXJ/s2N9SpdYAEr6CQcgr2COF350nxaO1FSbHYfL+tEKBcMcLDrdOQ==}
+    dev: true
+
   /typescript@5.0.2:
     resolution: {integrity: sha512-wVORMBGO/FAs/++blGNeAVdbNKtIh1rbBL2EyQ1+J9lClJ93KiiKe8PmFIVdXhHcyv44SL9oglmfeSsndo0jRw==}
     engines: {node: '>=12.20'}
@@ -3018,7 +3025,6 @@ packages:
 
   /valibot@0.13.1:
     resolution: {integrity: sha512-SG2W1RHqE2LShl3p6tyERt6I+G6PQa9ZFVfkyNKXz01HBzL+tBeH5kXw/5AQeAzPJSjI3djVGBl1CyozA1kyBQ==}
-    dev: false
 
   /validator@13.11.0:
     resolution: {integrity: sha512-Ii+sehpSfZy+At5nPdnyMhx78fEoPDkR2XW/zimHEL3MyGJQOCQ7WeP20jPYRz7ZCpcKLB21NxuXHF3bxjStBQ==}

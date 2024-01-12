@@ -5,5 +5,5 @@
 	"editor.indentSize": "tabSize",
 	//"editor.formatOnType": true,
 	"eslint.workingDirectories": ["./lib", "./app"],
-	"typescript.tsdk": "node_modules\\typescript\\lib"
+	"typescript.tsdk": "lib\\node_modules\\typescript\\lib"
 }
