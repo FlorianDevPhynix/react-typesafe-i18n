@@ -1,76 +1,35 @@
 import { type PluginOption } from 'vite';
-import { Language } from './src/i18n/async/async';
+
+import { base_language } from './src/i18n/static';
+import { lang as german } from './src/i18n/static/de';
+import { lang as italian } from './src/i18n/static/it';
+import { lang as arabic } from './src/i18n/static/ar';
+
 type Translation = Record<string, unknown>;
 
 export function LanguageServerPlugin(): PluginOption {
-	const languages: Language[] = [
-		{
-			code: 'en',
-			direction: 'ltr',
-			langData: {
-				name: 'English',
-				icon: null,
-			}
-		},
-		{
-			code: 'de',
-			direction: 'ltr',
-			langData: {
-				name: 'Deutsch',
-				icon: null,
-			}
-		},
-		{
-			code: 'it',
-			direction: 'ltr',
-			langData: {
-				name: 'Italiano',
-				icon: null,
-			}
-		},
-	];
+	function make_translation<C extends string, D extends object>({
+		code,
+		translation,
+	}: {
+		code: C;
+		translation: D;
+	}): [C, D] {
+		return [code, translation];
+	}
 
 	const translations = new Map<string, Translation>([
-		[
-			'en',
-			{
-				home: {
-					count: 'count is: {count:number}!',
-					tip: 'Edit src/App.tsx and save to test HMR',
-					docs: 'Click on the Vite and React logos to learn more',
-				},
-				about: {
-					title: 'About Page',
-				},
-				test: 'shared test value {count:number}',
-			},
-		],
-		[
-			'de',
-			{
-				home: {
-					count: 'Die aktuelle Zählung ist: {count:number}!',
-					tip: 'Bearbeiten Sie src/App.tsx und speichern Sie es, um HMR zu testen',
-					docs: 'Klicken Sie auf die Vite- und React-Logos, um mehr zu erfahren',
-				},
-				about: {
-					title: 'Über die Seite',
-				},
-				test: 'Test Wert',
-			},
-		],
-		[
-			'it',
-			{
-				home: {
-					docs: 'Clicca sui loghi Vite e React per saperne di più',
-				},
-				about: {
-					title: 'Informazioni sulla pagina',
-				},
-			},
-		],
+		make_translation(base_language),
+		make_translation(german),
+		make_translation(italian),
+		make_translation(arabic),
 	]);
+
+	const languages = [base_language, german, italian, arabic].map((value) => ({
+		code: value.code,
+		direction: value.direction,
+		langData: value.langData,
+	}));
 
 	return {
 		name: 'language-server-plugin',

@@ -29,6 +29,11 @@
       "require": "./dist/index.js",
       "import": "./dist/index.mjs"
     },
+    "./formatters": {
+      "types": "./dist/formatters.d.ts",
+      "require": "./dist/formatters.js",
+      "import": "./dist/formatters.mjs"
+    },
     "./internal": {
       "types": "./dist/internal.d.ts",
       "require": "./dist/internal.js",

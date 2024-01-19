@@ -1,6 +1,7 @@
 import { useLanguage, useTranslation } from '../i18n';
 
 export const translation = {
+	name: 'About',
 	title: 'About Page',
 } as const;
 

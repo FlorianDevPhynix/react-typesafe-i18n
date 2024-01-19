@@ -6,7 +6,7 @@ export interface Provider<C extends string> {
 	 * @returns the translation object, undefined when no language for the passed code or null on any other error
 	 */
 	get(
-		code: C,
+		code: C | string,
 		log: Logger
 	): Promise<object | null | undefined> | (object | null | undefined);
 
@@ -15,13 +15,13 @@ export interface Provider<C extends string> {
 	//set(lang: CacheEntry<object>): void;
 }
 
-export class StaticProvider<L extends Translation<C, D, object>[], D extends LanguageData, C extends string = L[number]['code']>
+export class StaticProvider<D extends LanguageData, C extends string>
 	implements Provider<C>, LangListProvider<C, D>
 {
 	private cache: Map<string, object>;
 	private langList: LangList<C, D>;
 
-	constructor(languages: L) {
+	constructor(languages: Translation<C, D, object>[]) {
 		this.cache = new Map<string, object>(
 			languages.map((value) => [value.code, value.translation])
 		);
@@ -30,7 +30,7 @@ export class StaticProvider<L extends Translation<C, D, object>[], D extends Lan
 			return {
 				code: value.code,
 				direction: value.direction,
-				langData: value.langData
+				langData: value.langData,
 			};
 		});
 	}
@@ -52,18 +52,22 @@ export class StaticProvider<L extends Translation<C, D, object>[], D extends Lan
 	}
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-type LangCodes<
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	S extends StaticProvider<L, D, C>,
-	C extends string = string,
-	D extends LanguageData = LanguageData,
-	L extends Translation<C, D, object>[] = Translation<C, D, object>[]
-> = C;
+/**
+ * Type helper to extract the language codes as a type
+ * @example
+ * ```
+ * const langlist = [base_language, ...];
+ *
+ * const provider = new StaticProvider<
+ * 	typeof base_language.langData,
+ * 	InferLangCodes<typeof langlist>
+ * >(langlist);
+ * ```
+ */
 export type InferLangCodes<
 	L extends Translation<C, D, object>[],
 	D extends LanguageData = LanguageData,
-	C extends string = L[number]['code']
+	C extends string = L[number]['code'],
 > = C;
 
 export * from './types';
