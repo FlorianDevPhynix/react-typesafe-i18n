@@ -1,6 +1,8 @@
 # React Safe i18n
 
-A typesafe translation library that uses a base translation, as a fallback with a custom parser, to achieve full safety in the React UI.
+A typesafe [Internationalization](#more-information-on-internationalization) library that uses a base translation, as a fallback with a custom parser, to achieve full safety in the React UI.
+
+Even when no translation data can be asynchonously aquired, so a connection to some kind of backend is not possibel, then the React UI can still render without having a bunch of undefined values.
 
 ## Features
 
@@ -15,13 +17,7 @@ A typesafe translation library that uses a base translation, as a fallback with 
 
 ## Example
 
-For a full example see this [Sandbox](https://stackblitz.com/edit/react-typesafe-i18n-example) or the projects test app [here](https://github.com/FlorianDevPhynix/react-typesafe-i18n/tree/main/app).
-
-## More Information on Internationalization
-
-- [Short Summarization](https://web.dev/learn/design/internationalization/)
-- [W3C Internationalization techniques: Authoring web pages](https://www.w3.org/International/techniques/authoring-html)
-- [Arabic numerals](https://en.wikipedia.org/wiki/Arabic_numerals#Comparison_with_other_digits)
+For a full example see this [Sandbox](https://stackblitz.com/edit/react-typesafe-i18n-example) or the projects development app [here](https://github.com/FlorianDevPhynix/react-typesafe-i18n/tree/main/app).
 
 ## Roadmap
 
@@ -34,11 +30,18 @@ will be implemented in the future.
 - [ ] utility for react components in translations ([react in translation: recipe](https://github.com/ivanhofer/typesafe-i18n/blob/main/packages/adapter-react/README.md#recipes))
 - [ ] Custom lang resolve algorithm (Detector)
 - [ ] Support for suspense and showing error message when async lang loading failed: error messages will be static translations, shown in users selected language
+- [ ] Add more formatters & utilitys
 
 ## Usage
 
-It is recommended to put all translation code into a i18n folder in the `src` directory of your project.
-All the configuration and Boilerplate can be contained in the `i18n/index.ts` file.
+Most of the configuration and Boilerplate can be contained in a single file.
+
+### Installation
+
+```sh
+npm install react-safe-i18n
+pnpm add react-safe-i18n
+```
 
 ### Providers
 
@@ -171,7 +174,19 @@ export const lang: Language = {
 
 Asynchronously fetching languages and translations is only possible with the `AsyncProvider`. It will cache all languages and load new ones when required.
 
-> A more thorough example with validation of the loaded translations can be found in the Test App's [async.ts](https://github.com/FlorianDevPhynix/react-typesafe-i18n/tree/main/app/src/i18n/async.ts) file.
+> A more thorough example can be found in the Test App's ["async.ts"](https://github.com/FlorianDevPhynix/react-typesafe-i18n/tree/main/app/src/i18n/async/async.ts) file.
+
+To create an `AsyncProvider` you will have to implement two functions and provide them to it.
+
+- The first parameter function is expected to load a language based on it's short code. The result can be any string indexed object, the parser will do the rest.
+
+- The second parameter function needs to return a list of all available languages, this data will be used to load any of those languages.
+It is recommended to use one of the many validation librarys to check all of these language entrys.
+The example at ["async.ts"](https://github.com/FlorianDevPhynix/react-typesafe-i18n/tree/main/app/src/i18n/async/async.ts)
+uses valibot but also does some custom validation on the list to ensure that all languages that are valid will be available.
+
+Also take a look at the types, to see how this data is structured. There also is a property of type `Record<string, unkown>` on these Language entrys,
+called langData that allows you to store additional data for each language.
 
 ```ts
 import { AsyncProvider } from 'react-typesafe-i18n';
@@ -184,7 +199,7 @@ export const asyncProvider = new AsyncProvider(
 );
 ```
 
-Here's a full example.
+Here's a full example configuration.
 
 ```ts
 import {
@@ -197,7 +212,7 @@ import {
 
 import { Language, asyncProvider } from './async';
 
-// import translation from component files
+// import base translation from component files
 import { translation as home } from '../pages/Home';
 
 // base
@@ -208,6 +223,7 @@ const base_translation = {
 
 export const base_language: Translation<
   string,
+  // infer type from validation done when it is received from an async request
   Language['langData'],
   typeof base_translation
 > = {
@@ -262,8 +278,8 @@ import init from './i18n';
 
 import App from './App';
 
+// the builder is async, this does not affect the react app in any way
 (async () => {
-  // the builder is async, this does not affect the react app in any way
   const I18nProvider = await init();
 
   // will be created after the translations are ready
@@ -281,6 +297,7 @@ Now you can use the translations in your components
 and even define their specific translations besides them.
 
 ```tsx
+// example component
 import { useLanguage, useTranslation, languages } from '../i18n';
 import { LanguageIcon } from './icon';
 
@@ -385,17 +402,41 @@ const builder = new i18nBuilder(base_language, asyncProvider).addFormatterInit(
 )
 ```
 
+All available formatters:
+
+```ts
+import {
+  date,
+  identity,
+  ignore,
+  lowercase,
+  number,
+  replace,
+  time,
+  uppercase,
+} from 'react-safe-i18n/formatters';
+```
+
 Here's the [Documentation for Custom Formatters](https://github.com/ivanhofer/typesafe-i18n/tree/318c9042fddf179bde6775bbead9a37fc557ad2a/packages/formatters#typesafe-i18n-formatters)
 and some more [Example](https://github.com/ivanhofer/typesafe-i18n/blob/318c9042fddf179bde6775bbead9a37fc557ad2a/packages/formatters/example/src/i18n/formatters.ts)
 
+## More Information on Internationalization
+
+- [Short Summarization](https://web.dev/learn/design/internationalization/)
+- [W3C Internationalization techniques: Authoring web pages](https://www.w3.org/International/techniques/authoring-html)
+- [Arabic numerals](https://en.wikipedia.org/wiki/Arabic_numerals#Comparison_with_other_digits)
+
 ## Preload
 
-Asynchronously loading translation data can significantly increase time until First Contentful Paint.
-For big translation, it is recommended to use [HTML preload](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel/preload) to speed up the page load.
+Asynchronously loading translation data can (*significantly*) increase time until First Contentful Paint.
+For big translations, it is recommended to use [HTML preload](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel/preload) to speed up the page load.
 
 ```html
 <head>
-  <link rel="preload" href="/common-i18n/rest/translations/common/availableLanguages" as="fetch" crossorigin="anonymous">
+  <!-- preload list of languages -->
+  <link rel="preload" href="/rest/localization/languages" as="fetch" crossorigin="anonymous">
+  <!-- preload default language (if needed) -->
+  <link rel="preload" href="/rest/localization/translations?lang=en" as="fetch" crossorigin="anonymous">
 </head>
 ```
 
