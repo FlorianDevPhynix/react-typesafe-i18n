@@ -18,17 +18,22 @@ export default defineConfig({
 			entry: [
 				path.resolve(__dirname, 'src/index.ts'),
 				path.resolve(__dirname, 'src/internal.ts'),
+				path.resolve(__dirname, 'src/formatters.ts'),
 			],
 			name: 'react-typesafe-i18n',
 			formats: ['es', 'cjs'],
 			fileName: function (format, entry) {
-				return `${entry.includes('internal') ? 'internal' : 'index'}.${
-					format === 'es' ? 'mjs' : 'js'
-				}`;
+				return `${
+					entry.includes('internal')
+						? 'internal'
+						: entry.includes('formatters')
+						? 'formatters'
+						: 'index'
+				}.${format === 'es' ? 'mjs' : 'js'}`;
 			},
 		},
 		rollupOptions: {
-			external: ['react', 'valibot'],
+			external: ['react'],
 			output: {
 				// Since we publish our ./src folder, there's no point
 				// in bloating sourcemaps with another copy of it.

@@ -29,6 +29,11 @@
       "require": "./dist/index.js",
       "import": "./dist/index.mjs"
     },
+    "./formatters": {
+      "types": "./dist/formatters.d.ts",
+      "require": "./dist/formatters.js",
+      "import": "./dist/formatters.mjs"
+    },
     "./internal": {
       "types": "./dist/internal.d.ts",
       "require": "./dist/internal.js",
@@ -55,8 +60,7 @@
     "react": "18.x"
   },
   "dependencies": {
-    "react": "18.2.0",
-    "valibot": "^0.13.1"
+    "react": "18.2.0"
   },
   "devDependencies": {
     "@types/node": "^16.0.12",
@@ -74,8 +78,10 @@
     "eslint-plugin-tsdoc": "^0.2.17",
     "prettier": "3.0.2",
     "typesafe-i18n": "5.26.2",
+    "typesafe-utils": "^1.16.2",
     "typescript": "5.0.2",
     "utility-types": "^3.10.0",
+    "valibot": "^0.13.1",
     "vite": "^4.4.9",
     "vite-plugin-dts": "^3.5.3",
     "vitest": "^0.31.4"

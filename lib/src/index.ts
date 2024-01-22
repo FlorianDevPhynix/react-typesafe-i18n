@@ -3,4 +3,6 @@ export * from './builder';
 export * from './providers';
 export * from './detectors';
 
+export * from './utility';
+
 export * from './parser';

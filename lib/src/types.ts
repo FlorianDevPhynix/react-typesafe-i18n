@@ -31,17 +31,48 @@ export type BaseTranslation = {
 };
 
 /**
- * Language object with it's translation
+ * Text Direction
  */
-export type Language<L, T> = { lang: L; translation: T };
+export type Direction = 'ltr' | 'rtl';
 
 /**
- * Language entry in the cache
+ * base Language object
  */
-//export type CacheEntry<D> = Language<string, D>;
-export type BaseCacheEntry<D> = Language<string, D>;
+export type BaseLanguage<C> = {
+	code: C;
+	direction: Direction;
+};
 
+/**
+ * Language custom data type
+ */
+export type LanguageData = Record<string, unknown>;
+
+/**
+ * Language object with custom data
+ */
+export type Language<
+	C extends string,
+	D extends LanguageData,
+> = BaseLanguage<C> & { langData: D };
+
+/**
+ * Translation for one language with custom data
+ */
+export type Translation<C extends string, D extends LanguageData, T> = Language<
+	C,
+	D
+> & {
+	translation: T;
+};
+
+/**
+ * Utility type alias
+ */
 export type Strict<T> = DeepStringify<T>;
+/**
+ * Utility type alias
+ */
 export type NonStrict<T> = DeepPartial<Strict<T>>;
 
 /**

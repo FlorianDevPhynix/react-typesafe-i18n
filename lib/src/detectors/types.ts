@@ -1,6 +1,6 @@
 import type { Logger } from '../types';
 
-export type LocaleDetector = () => string[];
+export type LocaleDetector = () => Promise<string[]> | string[];
 export type LocaleSetter = (lang: string, log: Logger) => Promise<void> | void;
 
 export type LocaleHandler = {

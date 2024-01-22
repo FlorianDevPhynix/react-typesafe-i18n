@@ -1,25 +1,25 @@
 import { Provider } from './index';
-import { LangListProvider, LangList, LanguageData } from './types';
-import { BaseCacheEntry, Logger } from '../types';
+import { LangListProvider, LangList, } from './types';
+import { Translation, LanguageData, Logger } from '../types';
 
-export type Callback = (lang: string) => ReturnType<Provider['get']>;
-export type LangCallback<L extends LanguageData> = () =>
-	| Promise<LangList<L> | undefined>
-	| LangList<L>
+export type Callback<C extends string> = (lang: string) => ReturnType<Provider<C>['get']>;
+export type LangCallback<C extends string, D extends LanguageData> = () =>
+	| Promise<LangList<C, D> | undefined>
+	| LangList<C, D>
 	| undefined;
 
 /**
  * Cached by default
  */
-export class AsyncProvider<L extends LanguageData>
-	implements Provider, LangListProvider<L>
+export class AsyncProvider<C extends string, D extends LanguageData>
+	implements Provider<C>, LangListProvider<C, D>
 {
 	private cache = new Map<string, object>();
-	private langList: LangList<L> | undefined;
+	private langList: LangList<C, D> | undefined;
 
 	constructor(
-		private callback: Callback,
-		private listCallback: LangCallback<L>
+		private callback: Callback<C>,
+		private listCallback: LangCallback<C, D>
 	) {}
 
 	public async get(code: string, log: Logger) {
@@ -28,7 +28,7 @@ export class AsyncProvider<L extends LanguageData>
 			return entry;
 		}
 
-		let result: ReturnType<Callback>;
+		let result: ReturnType<Callback<C>>;
 		try {
 			result = await this.callback(code);
 		} catch (error) {
@@ -48,8 +48,8 @@ export class AsyncProvider<L extends LanguageData>
 		return undefined;
 	}
 
-	public set(lang: BaseCacheEntry<object>) {
-		this.cache.set(lang.lang, lang.translation);
+	public set(lang: Translation<C, D, object>) {
+		this.cache.set(lang.code, lang.translation);
 	}
 
 	async getLanguages(log: Logger) {
@@ -70,18 +70,18 @@ export class AsyncProvider<L extends LanguageData>
  * make a object that provides the list of languages
  * @throws when callback failed, instead use {@link AsyncLangProvider}
  */
-export async function asyncInitListProvider<L extends LanguageData>(
-	callback: LangCallback<L>
-): Promise<LangListProvider<L>> {
+export async function asyncInitListProvider<C extends string, D extends LanguageData>(
+	callback: LangCallback<C, D>
+): Promise<LangListProvider<C, D>> {
 	const lang = await callback();
 	return {
 		getLanguages: () => lang,
 	};
 }
 
-export function AsyncListProvider<L extends LanguageData>(
-	callback: LangCallback<L>
-): LangListProvider<L> & { langList: LangList<L> | undefined } {
+export function AsyncListProvider<C extends string, D extends LanguageData>(
+	callback: LangCallback<C, D>
+): LangListProvider<C, D> & { langList: LangList<C, D> | undefined } {
 	return {
 		langList: undefined,
 		getLanguages: async function (log) {

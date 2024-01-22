@@ -3,17 +3,19 @@ import { useState } from 'react';
 import reactLogo from '../assets/react.svg';
 import viteLogo from '/vite.svg';
 
-import { useLanguage, useTranslation, languages } from '../i18n';
+import { useTranslation } from '../i18n';
 
 export const translation = {
+	name: 'Home',
+	title: 'Vite + React',
 	count: 'count is: {count:number}!',
 	tip: 'Edit <code>src/App.tsx</code> and save to test HMR',
 	docs: 'Click on the Vite and React logos to learn more',
+	test: 'Example using formatters: "{test:string|lower|noSpaces}"',
 } as const;
 
 export default function Home() {
 	const t = useTranslation();
-	const { lang, direction, func: f } = useLanguage();
 
 	const [count, setCount] = useState(0);
 
@@ -31,7 +33,7 @@ export default function Home() {
 					/>
 				</a>
 			</div> */}
-			<h1>Vite + React</h1>
+			<h1>{t.home.title()}</h1>
 			<div className="card">
 				<button onClick={() => setCount((count) => count + 1)}>
 					{t.home.count({ count })}
@@ -39,18 +41,7 @@ export default function Home() {
 				<p>{t.home.tip()}</p>
 			</div>
 			<p className="read-the-docs">{t.home.docs()}</p>
-			{lang} {direction}
-			<div>
-				{languages.map((value) => (
-					<button
-						onClick={() => f.switchLang(value.code)}
-						key={value.code}
-					>
-						{value.name}
-					</button>
-				))}
-				<button onClick={() => f.resetLang()}>Reset</button>
-			</div>
+			<p>{t.home.test({ test: 'TesT TEST 2' })}</p>
 		</>
 	);
 }
