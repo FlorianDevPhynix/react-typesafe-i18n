@@ -27,6 +27,7 @@ will be implemented in the future.
 
 - [x] React element for setting the lang attribute on the html tag
 - [x] formatter user setting ...
+- [x] add more tests
 - [ ] utility for react components in translations ([react in translation: recipe](https://github.com/ivanhofer/typesafe-i18n/blob/main/packages/adapter-react/README.md#recipes))
 - [ ] Custom lang resolve algorithm (Detector)
 - [ ] Support for suspense and showing error message when async lang loading failed: error messages will be static translations, shown in users selected language

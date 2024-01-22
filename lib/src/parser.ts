@@ -6,43 +6,32 @@ export type ObjectType = Output<typeof ObjectSchema>;
 function parse_value(schema: unknown, value: unknown) {
 	let result: unknown;
 
-	switch (typeof schema) {
-		case 'object': {
-			if (typeof value === 'object') {
-				const valueResult = safeParse(ObjectSchema, value);
-				if (valueResult.success) {
-					result = parse_object(
-						schema as Record<string, unknown>,
-						valueResult.data
-					);
-				} else {
-					result = schema;
-				}
-			} else {
-				result = schema;
-			}
-			break;
+	if (Array.isArray(schema)) {
+		if (Array.isArray(value)) {
+			result = value;
+		} else {
+			result = schema;
 		}
-
-		case 'string':
-			if (typeof value === 'string') {
-				result = value;
+	} else if (typeof schema === 'object') {
+		if (typeof value === 'object') {
+			const valueResult = safeParse(ObjectSchema, value);
+			if (valueResult.success) {
+				result = parse_object(
+					schema as Record<string, unknown>,
+					valueResult.output
+				);
 			} else {
 				result = schema;
 			}
-			break;
-
-		default:
-			if (Array.isArray(schema)) {
-				console.log(value);
-				if (Array.isArray(value)) {
-					result = value;
-				} else {
-					result = schema;
-				}
-			}
-			//result = schema;
-			break;
+		} else {
+			result = schema;
+		}
+	} else if (typeof schema === 'string') {
+		if (typeof value === 'string') {
+			result = value;
+		} else {
+			result = schema;
+		}
 	}
 
 	return result;
