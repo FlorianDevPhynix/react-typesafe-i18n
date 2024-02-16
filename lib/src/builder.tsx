@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { createContext, useContext, useMemo, useState } from 'react';
+import React, { createContext, useContext, useMemo, useState } from 'react';
 
 import { getLanguage } from './internal';
 
@@ -120,12 +119,14 @@ class i18nBuilder<
 		return this.detector.get(this.base.code, this.provider, this.logger);
 	}
 
-	private setLang(code: C) {
+	private async setLang(code: C) {
+		const resolved_code = await this.resolveLang(code);
 		if (typeof this.detector === 'undefined') {
-			return this.base.code;
+			return resolved_code;
 		}
 
-		return this.detector.set(code, this.logger);
+		this.detector.set(resolved_code, this.logger);
+		return resolved_code;
 	}
 
 	private async resolveLang(code: C) {
@@ -152,7 +153,7 @@ class i18nBuilder<
 				formatters = this.formatterInit(result.code);
 				this.formatters.set(result.code, formatters);
 			}
-			console.log(this.formatters);
+			//console.log(this.formatters);
 			// make translation
 			return {
 				lang: result.code,
@@ -270,17 +271,20 @@ class i18nBuilder<
 					() => startLang.translation
 				);
 
-				const i18nFunc: i18nFuncType<C> = {
-					switchLang: async (code) => {
-						if (lang === code) return;
-						const result = await this.genTranslation(code);
-						setTranslation(() => result.translation);
-						this.setLang(result.lang);
-						setLang(result.lang);
-					},
-					getLang: () => lang,
-					resetLang: () => i18nFunc.switchLang(this.base.code),
-				};
+				const i18nFunc: i18nFuncType<C> = useMemo(
+					() => ({
+						switchLang: async (code) => {
+							if (lang === code) return;
+							const result = await this.genTranslation(code);
+							setTranslation(() => result.translation);
+							this.setLang(result.lang);
+							setLang(result.lang);
+						},
+						getLang: () => lang,
+						resetLang: () => i18nFunc.switchLang(this.base.code),
+					}),
+					[lang]
+				);
 
 				return (
 					<translationContext.Provider value={translated}>

@@ -36,19 +36,25 @@ export function LanguageServerPlugin(): PluginOption {
 		apply: 'serve',
 
 		configureServer(server) {
-			server.middlewares.use('/rest/i18n/languages', (req, res, next) => {
-				if (req.method !== 'GET') {
-					next();
-					return;
-				}
+			server.middlewares.use(
+				'/rest/i18n/languages',
+				async (req, res, next) => {
+					if (req.method !== 'GET') {
+						next();
+						return;
+					}
 
-				// respond with language list
-				res.end(JSON.stringify(languages));
-			});
+					/* await new Promise((resolve) =>
+						setTimeout(() => resolve(undefined), 2 * 1000)
+					); */
+					// respond with language list
+					res.end(JSON.stringify(languages));
+				}
+			);
 
 			server.middlewares.use(
 				'/rest/i18n/translations/',
-				(req, res, next) => {
+				async (req, res, next) => {
 					if (req.method !== 'GET') {
 						next();
 						return;
@@ -68,6 +74,9 @@ export function LanguageServerPlugin(): PluginOption {
 					//console.log(parts);
 					parts[parts.length - 1];
 
+					/* await new Promise((resolve) =>
+						setTimeout(() => resolve(undefined), 5 * 1000)
+					); */
 					// respond with translation
 					res.end(
 						JSON.stringify(

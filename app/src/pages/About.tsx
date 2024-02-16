@@ -19,21 +19,7 @@ export default function About() {
 						f.switchLang('de');
 					}}
 				>
-					German
-				</button>
-				<button
-					onClick={() => {
-						f.switchLang('it');
-					}}
-				>
-					Italian
-				</button>
-				<button
-					onClick={() => {
-						f.resetLang();
-					}}
-				>
-					Reset
+					Switch to German
 				</button>
 			</div>
 		</>

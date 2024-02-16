@@ -12,7 +12,11 @@
 		"prettier.config",
 		"vite.config.ts",
 		"dist",
-		"node_modules"
+		"node_modules",
+		"*.test.ts",
+		"*.test.tsx",
+		"*.bench.ts",
+		"*.bench.tsx"
 	],
 	"parser": "@typescript-eslint/parser",
 	"plugins": ["@typescript-eslint", "eslint-plugin-tsdoc"],

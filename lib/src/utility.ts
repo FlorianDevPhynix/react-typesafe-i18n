@@ -17,7 +17,7 @@ export function LangHtmlComponent<C extends string>(props: {
 	return React.createElement(React.Fragment);
 }
 
-export type ExtendPromise<T> = {
+/* export type ExtendPromise<T> = {
 	status: 'pending' | 'fulfilled' | 'rejected';
 	value: T;
 	reason: Error;
@@ -45,4 +45,4 @@ export function use<T>(inPromise: Promise<T>) {
 		);
 		throw promise;
 	}
-}
+} */

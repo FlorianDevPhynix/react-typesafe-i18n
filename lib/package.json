@@ -47,13 +47,15 @@
   ],
   "scripts": {
     "build": "vite build",
-    "lint": "eslint ./src --ext ts,tsx && npm run check",
+    "lint": "eslint ./src --ext ts,tsx",
     "check": "tsc --noEmit",
     "format": "prettier --config ../.prettierrc --write ./src",
     "test": "vitest",
     "test:ui": "vitest --ui",
+    "test:ci": "vitest run",
     "coverage": "vitest run --coverage",
-    "release": "pnpm run build && bumpp --no-push",
+    "bench": "vitest bench",
+    "release": "npm run build && bumpp --no-push",
     "trace": "tsc --generateTrace trace && pnpm --package=@typescript/analyze-trace dlx analyze-trace ./trace"
   },
   "peerDependencies": {
@@ -63,12 +65,15 @@
     "react": "18.2.0"
   },
   "devDependencies": {
-    "@types/node": "^16.0.12",
+    "@testing-library/jest-dom": "^6.4.2",
+    "@testing-library/react": "^14.1.2",
+    "@types/node": "^18.19.10",
     "@types/react": "18.2.15",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.7.0",
     "@vitejs/plugin-react": "^4.0.4",
-    "@vitest/ui": "^0.34.1",
+    "@vitest/coverage-v8": "^1.2.2",
+    "@vitest/ui": "^1.2.2",
     "bumpp": "^9.1.0",
     "eslint": "^8.45.0",
     "eslint-config-prettier": "9.1.0",
@@ -76,14 +81,13 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
     "eslint-plugin-tsdoc": "^0.2.17",
+    "jsdom": "^24.0.0",
     "prettier": "3.0.2",
     "typesafe-i18n": "5.26.2",
     "typesafe-utils": "^1.16.2",
-    "typescript": "5.0.2",
+    "typescript": "5.1.6",
     "utility-types": "^3.10.0",
-    "valibot": "^0.13.1",
     "vite": "^4.4.9",
-    "vite-plugin-dts": "^3.5.3",
-    "vitest": "^0.31.4"
+    "vite-plugin-dts": "^3.5.3"
   }
 }

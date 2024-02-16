@@ -18,7 +18,7 @@ jobs:
         uses: ./.github/actions/full-setup
 
       - name: Run Vitest
-        run: cd ./lib && pnpm test
+        run: npm run ci:test
 
   check:
     name: Check
@@ -31,14 +31,17 @@ jobs:
       - name: Setup
         uses: ./.github/actions/full-setup
 
-      - name: Run lint
-        run: cd ./lib && pnpm run lint
+      - name: Run Typescipt check
+        run: npm run ci:check
+
+      - name: Run Eslint
+        run: npm run ci:lint
 
   build:
     name: Build
     runs-on: ubuntu-latest
     timeout-minutes: 2
-    needs: [check]
+    needs: [check, test]
     steps:
       - name: Security Setup
         uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1

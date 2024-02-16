@@ -11,11 +11,17 @@ import { Language, asyncProvider } from './async';
 // import translation from component files
 import { translation as home } from '../../pages/Home';
 import { translation as about } from '../../pages/About';
+import { translation as renderer } from '../../pages/Renderer';
+import { translation as nested } from '../../pages/Nested';
+import { translation as formatters } from '../../pages/Formatters';
 
 // base
 const base_translation = {
 	home,
 	about,
+	renderer,
+	nested,
+	formatters,
 } as const;
 
 export const base_language: Translation<

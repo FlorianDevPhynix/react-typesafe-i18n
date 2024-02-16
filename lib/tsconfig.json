@@ -16,5 +16,6 @@
 		"baseUrl": "."
 	},
 	"include": ["src"],
+	"exclude": ["src/**/*.{test,bench}.{ts,tsx}"],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }

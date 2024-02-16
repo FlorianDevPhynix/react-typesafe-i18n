@@ -16,11 +16,17 @@ import {
 // import translation from component files
 import { translation as home } from '../../pages/Home';
 import { translation as about } from '../../pages/About';
+import { translation as renderer } from '../../pages/Renderer';
+import { translation as nested } from '../../pages/Nested';
+import { translation as formatters } from '../../pages/Formatters';
 
 // base
 export const base_translation = {
 	home,
 	about,
+	renderer,
+	nested,
+	formatters,
 } as const;
 
 // base language

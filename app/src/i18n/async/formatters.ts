@@ -3,6 +3,8 @@ import {
 	uppercase,
 	lowercase,
 	replace,
+	date,
+	time,
 } from 'react-safe-i18n/formatters';
 
 export function initFormatters(locale: string) {
@@ -10,5 +12,7 @@ export function initFormatters(locale: string) {
 		noSpaces: replace(/\s/g, '-'),
 		upper: uppercase,
 		lower: lowercase,
+		weekday: date(locale, { weekday: 'long' }),
+		timeShort: time(locale, { timeStyle: 'short' }),
 	} satisfies BaseFormatters;
 }

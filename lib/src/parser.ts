@@ -1,7 +1,4 @@
-import { safeParse, Output, record, unknown } from 'valibot';
-
-const ObjectSchema = record(unknown());
-export type ObjectType = Output<typeof ObjectSchema>;
+export type ObjectType = Record<string | number, unknown>;
 
 function parse_value(schema: unknown, value: unknown) {
 	let result: unknown;
@@ -14,11 +11,11 @@ function parse_value(schema: unknown, value: unknown) {
 		}
 	} else if (typeof schema === 'object') {
 		if (typeof value === 'object') {
-			const valueResult = safeParse(ObjectSchema, value);
-			if (valueResult.success) {
+			if (value && typeof value === 'object') {
 				result = parse_object(
-					schema as Record<string, unknown>,
-					valueResult.output
+					// ignoring that a key can also be Symbol
+					schema as ObjectType,
+					value as ObjectType
 				);
 			} else {
 				result = schema;
@@ -67,9 +64,8 @@ export function parse<Base extends ObjectType>(
 	schema: Base,
 	value: unknown
 ): Base {
-	const result = safeParse(ObjectSchema, value);
-	if (!result.success) {
+	if (!(value && typeof value === 'object')) {
 		return schema;
 	}
-	return parse_object(schema, result.data) as Base;
+	return parse_object(schema, value as ObjectType) as Base;
 }

@@ -37,3 +37,4 @@ export async function getLanguage<
 }
 
 export * from './parser';
+export * from './renderer';

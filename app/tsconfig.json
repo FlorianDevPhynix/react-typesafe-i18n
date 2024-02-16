@@ -19,10 +19,7 @@
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"noFallthroughCasesInSwitch": true,
-		"types": ["vite/client"],
-		"paths": {
-			"@/lib": ["./src/lib-import.ts"]
-		}
+		"types": ["vite/client"]
 	},
 	"include": ["src"],
 	"references": [{ "path": "./tsconfig.node.json" }]

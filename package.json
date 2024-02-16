@@ -9,15 +9,22 @@
     "check": "pnpm --filter react-safe-i18n run check",
     "preview": "pnpm --filter app run preview",
     "test": "pnpm --filter react-safe-i18n run test",
-    "test:ui": "pnpm --filter react-safe-i18n run test:ui"
+    "test:ui": "pnpm --filter react-safe-i18n run test:ui",
+    "bench": "pnpm --filter react-safe-i18n run bench",
+    "ci:test": "pnpm --filter react-safe-i18n run test:ci",
+    "ci:check": "pnpm --filter react-safe-i18n run check",
+    "ci:lint": "pnpm --filter react-safe-i18n run lint"
   },
   "engines": {
-    "node": ">=16",
+    "node": ">=18",
     "pnpm": ">=8"
   },
   "pnpm": {
     "patchedDependencies": {
       "typesafe-i18n@5.26.2": "patches/typesafe-i18n@5.26.2.patch"
     }
+  },
+  "devDependencies": {
+    "vitest": "^1.1.3"
   }
 }

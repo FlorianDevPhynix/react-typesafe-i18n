@@ -8,7 +8,12 @@
 		"moduleResolution": "Node",
 		"skipLibCheck": true,
 		"strict": true,
-		"target": "ESNext"
+		"target": "ESNext",
+		"types": [
+			"vitest",
+			"@testing-library/jest-dom",
+			"@testing-library/jest-dom/vitest"
+		]
 	},
-	"include": ["vite.config.ts"]
+	"include": ["vite.config.ts", "src/**/*.{test,bench}.{ts,tsx}"]
 }

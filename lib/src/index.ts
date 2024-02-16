@@ -5,4 +5,7 @@ export * from './detectors';
 
 export * from './utility';
 
+export * from './html_parser';
+export * from './renderer';
+
 export * from './parser';

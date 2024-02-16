@@ -1,6 +1,9 @@
 import { defineConfig, HttpProxy } from 'vite';
 import react from '@vitejs/plugin-react';
 import { LanguageServerPlugin } from './language-server';
+import { browserslistToTargets } from 'lightningcss';
+import browserslist from 'browserslist';
+import { visualizer } from 'rollup-plugin-visualizer';
 
 function add_proxylog(proxy: HttpProxy.Server) {
 	proxy.on('error', (err) => {
@@ -22,7 +25,11 @@ const backend_host = '10.41.144.40:20000';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-	plugins: [react(), /* LogPlugin(), */ LanguageServerPlugin()],
+	plugins: [
+		react(),
+		/* LogPlugin(), */ LanguageServerPlugin(),
+		visualizer({ gzipSize: true, emitFile: true }),
+	],
 	server: {
 		proxy: {
 			'/common-i18n/rest/': {
@@ -32,9 +39,13 @@ export default defineConfig({
 			},
 		},
 	},
-	resolve: {
-		alias: {
-			'@/lib': './src/lib-import.ts',
+	css: {
+		transformer: 'lightningcss',
+		lightningcss: {
+			targets: browserslistToTargets(browserslist('>= 0.25%')),
 		},
+	},
+	build: {
+		cssMinify: 'lightningcss',
 	},
 });

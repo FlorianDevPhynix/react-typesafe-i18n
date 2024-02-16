@@ -6,6 +6,9 @@ import './App.css';
 
 import Home from './pages/Home';
 import About from './pages/About';
+import Renderer from './pages/Renderer';
+import Formatters from './pages/Formatters';
+import Nested from './pages/Nested';
 import { useTranslation, languages, useLanguage } from './i18n';
 
 export default function App() {
@@ -21,8 +24,14 @@ export default function App() {
 		<>
 			<button onClick={() => setPage(0)}>{t.home.name()}</button>
 			<button onClick={() => setPage(1)}>{t.about.name()}</button>
+			<button onClick={() => setPage(2)}>{t.renderer.name()}</button>
+			<button onClick={() => setPage(3)}>{t.formatters.name()}</button>
+			<button onClick={() => setPage(4)}>{t.nested.name()}</button>
 			{page === 0 && <Home />}
 			{page === 1 && <About />}
+			{page === 2 && <Renderer />}
+			{page === 3 && <Formatters />}
+			{page === 4 && <Nested />}
 			{lang} {direction}
 			<br />
 			<label htmlFor="language">

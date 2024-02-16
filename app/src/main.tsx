@@ -13,12 +13,10 @@ import './index.css';
 
 	ReactDOM.createRoot(document.getElementById('root')!).render(
 		<React.StrictMode>
-			<React.Suspense fallback={<h2>Loading...</h2>}>
-				<I18nProvider>
-					<LangHtmlComponent hook={useLanguage} />
-					<App />
-				</I18nProvider>
-			</React.Suspense>
+			<I18nProvider>
+				<LangHtmlComponent hook={useLanguage} />
+				<App />
+			</I18nProvider>
 		</React.StrictMode>
 	);
 })();

@@ -13,6 +13,9 @@ export default defineConfig({
 			},
 		}),
 	],
+	test: {
+		reporters: ['default', 'html'],
+	},
 	build: {
 		lib: {
 			entry: [
