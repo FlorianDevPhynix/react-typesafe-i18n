@@ -18,7 +18,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-safe-i18n": "workspace:../lib",
-    "valibot": "^0.13.1"
+    "valibot": "^0.30.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
